@@ -27,10 +27,10 @@ class FragmentTimer : Fragment() {
     lateinit var timer:Timer
     private lateinit var countDown: CountDownTimer
 
-    private lateinit var minuteTens: TextView
-    private lateinit var minuteUnits : TextView
-    private lateinit var secondTens : TextView
-    private lateinit var secondUnits : TextView
+    lateinit var minuteTens: TextView
+    lateinit var minuteUnits : TextView
+    lateinit var secondTens : TextView
+    lateinit var secondUnits : TextView
     private var timeLeftInMillis: Long = 0
 
     private fun setFields(){
@@ -76,18 +76,26 @@ class FragmentTimer : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_timer, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        countDown = object : CountDownTimer(0, 0) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() {}
+        }
+
 
         val minTens = minutes/10
         val minUnits = minutes % 10
-        val secTens = seconds/10
+        var secTens = seconds/10
         val secUnits = seconds%10
+
+        if(secTens>5)
+            secTens=0
 
         timer = Timer(minTens,minUnits,secTens,secUnits)
 

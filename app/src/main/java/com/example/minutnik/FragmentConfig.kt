@@ -20,19 +20,19 @@ private const val ARG_PARAM2 = "param2"
 class FragmentConfig : Fragment() {
 
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var minutesField : EditText
-    private lateinit var secondsField :EditText
+    private var minutes: String?=null
+    private var seconds: String?=null
+    lateinit var minutesField : EditText
+    lateinit var secondsField :EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
+        arguments?.let {
+            minutes = it.getString("minutes")
+            seconds = it.getString("seconds")
+        }
 
     }
 
@@ -49,7 +49,15 @@ class FragmentConfig : Fragment() {
 
         minutesField =view.findViewById(R.id.minutes)
         secondsField = view.findViewById(R.id.seconds)
+
+        minutesField.setText(minutes)
+        secondsField.setText(seconds)
+
+
+
+
     }
+
 
     companion object {
         /**

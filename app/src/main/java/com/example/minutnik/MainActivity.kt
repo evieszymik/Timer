@@ -24,10 +24,45 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        if (savedInstanceState != null) {
+
+            val currentFragmentTag = savedInstanceState.getString("currentFragment")
+
+            when (currentFragmentTag) {
+                "FragmentConfig" -> {
+
+                    val minutes = savedInstanceState.getString("minutes")
+                    val seconds = savedInstanceState.getString("seconds")
+
+                    val fragment = FragmentConfig()
+                    val bundle = Bundle()
+                    bundle.putString("minutes", minutes)
+                    bundle.putString("seconds", seconds)
+                    fragment.arguments = bundle
+                    replaceFragment(fragment)
+                }
+                "FragmentTimer" -> {
+                    val fragment=FragmentTimer()
+
+                    val minutes = savedInstanceState.getString("minutes")
+                    val seconds = savedInstanceState.getString("seconds")
+
+                    val bundle = Bundle()
+                    minutes?.let {bundle.putInt("mins", it.toInt())}
+                    seconds?.let { bundle.putInt("secs", it.toInt()) }
+                    fragment.arguments = bundle
+
+                    replaceFragment(fragment)
+                }
+            }
+        }
+        else {
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, FragmentConfig()).commit()
+        }
+
+
         buttonBack=findViewById(R.id.btnConfig)
         buttonNext=findViewById(R.id.btnTimer)
-
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, FragmentConfig()).commit()
 
         buttonBack.setOnClickListener{
             replaceFragment(FragmentConfig())
@@ -45,10 +80,31 @@ class MainActivity : AppCompatActivity() {
             fragment.arguments = bundle
 
             replaceFragment(fragment)
+
         }
     }
 
     private fun replaceFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if (currentFragment is FragmentConfig) {
+            outState.putString("currentFragment", "FragmentConfig")
+            outState.putString("minutes", currentFragment.minutesField.text.toString())
+            outState.putString("seconds", currentFragment.secondsField.text.toString())
+
+
+        } else if (currentFragment is FragmentTimer) {
+            outState.putString("currentFragment", "FragmentTimer")
+            outState.putString("minutes", currentFragment.minuteTens.text.toString()+currentFragment.minuteUnits.text.toString())
+            outState.putString("seconds", currentFragment.secondTens.text.toString()+currentFragment.secondUnits.text.toString())
+        }
+
+    }
+
 }

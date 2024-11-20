@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        buttonBack=findViewById(R.id.btnConfig)
+        buttonNext=findViewById(R.id.btnTimer)
+
         if (savedInstanceState != null) {
 
             val currentFragmentTag = savedInstanceState.getString("currentFragment")
@@ -58,14 +61,16 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, FragmentConfig()).commit()
+            buttonBack.isEnabled=false;
         }
 
 
-        buttonBack=findViewById(R.id.btnConfig)
-        buttonNext=findViewById(R.id.btnTimer)
+
 
         buttonBack.setOnClickListener{
             replaceFragment(FragmentConfig())
+            buttonBack.isEnabled=false
+            buttonNext.isEnabled=true
         }
 
         buttonNext.setOnClickListener{
@@ -80,6 +85,9 @@ class MainActivity : AppCompatActivity() {
             fragment.arguments = bundle
 
             replaceFragment(fragment)
+
+            buttonBack.isEnabled=true
+            buttonNext.isEnabled=false
 
         }
     }

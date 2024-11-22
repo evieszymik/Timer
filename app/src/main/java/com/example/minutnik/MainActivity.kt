@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                     bundle.putString("seconds", seconds)
                     fragment.arguments = bundle
                     replaceFragment(fragment)
+                    buttonBack.isEnabled=false
                 }
                 "FragmentTimer" -> {
                     val fragment=FragmentTimer()
@@ -56,13 +57,15 @@ class MainActivity : AppCompatActivity() {
                     fragment.arguments = bundle
 
                     replaceFragment(fragment)
+                    buttonNext.isEnabled=false
                 }
             }
         }
         else {
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, FragmentConfig()).commit()
-            buttonBack.isEnabled=false;
+            buttonBack.isEnabled=false
         }
+
 
 
 

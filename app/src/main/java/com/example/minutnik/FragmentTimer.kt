@@ -34,10 +34,10 @@ class FragmentTimer : Fragment() {
     private var timeLeftInMillis: Long = 0
 
     private fun setFields(){
-        minuteTens.text=timer.getMinuteTens().toString()
-        minuteUnits.text=timer.getMinuteUnits().toString()
-        secondTens.text=timer.getSecondTens().toString()
-        secondUnits.text=timer.getSecondUnits().toString()
+        minuteTens.text=String.format("%s",timer.getMinuteTens())
+        minuteUnits.text=String.format("%s",timer.getMinuteUnits())
+        secondTens.text=String.format("%s",timer.getSecondTens())
+        secondUnits.text=String.format("%s",timer.getSecondUnits())
     }
 
     private fun startTime(){
@@ -125,34 +125,35 @@ class FragmentTimer : Fragment() {
 
 
         buttonAdd1.setOnClickListener {
-            minuteTens.text = timer.modify(1,true).toString() }
+            minuteTens.text = String.format("%s",timer.modify(1,true))
+        }
 
         buttonAdd2.setOnClickListener {
-            minuteUnits.text = timer.modify(2,true).toString()
+            minuteUnits.text = String.format("%s",timer.modify(2,true))
             }
 
         buttonAdd3.setOnClickListener {
-            secondTens.text = timer.modify(3,true).toString()
+            secondTens.text = String.format("%s",timer.modify(3,true))
              }
 
         buttonAdd4.setOnClickListener {
-            secondUnits.text = timer.modify(4,true).toString()
+            secondUnits.text = String.format("%s",timer.modify(4,true))
              }
 
         buttonSub1.setOnClickListener {
-            minuteTens.text = timer.modify(1,false).toString()
+            minuteTens.text = String.format("%s",timer.modify(1,false))
              }
 
         buttonSub2.setOnClickListener {
-            minuteUnits.text = timer.modify(2,false).toString()
+            minuteUnits.text = String.format("%s",timer.modify(2,false))
              }
 
         buttonSub3.setOnClickListener {
-            secondTens.text = timer.modify(3,false).toString()
+            secondTens.text = String.format("%s",timer.modify(3,false))
              }
 
         buttonSub4.setOnClickListener {
-            secondUnits.text = timer.modify(4,false).toString()
+            secondUnits.text = String.format("%s",timer.modify(4,false))
              }
 
         buttonStart.setOnClickListener{

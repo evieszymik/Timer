@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonBack: Button
     private lateinit var buttonNext: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         buttonBack=findViewById(R.id.btnConfig)
         buttonNext=findViewById(R.id.btnTimer)
+
 
         if (savedInstanceState != null) {
 

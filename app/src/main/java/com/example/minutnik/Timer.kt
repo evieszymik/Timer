@@ -1,11 +1,14 @@
 package com.example.minutnik
 
-class Timer(private var minuteTens: Int=0, private var minuteUnits: Int=0,
+import android.os.CountDownTimer
+
+class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, private var minuteUnits: Int=0,
             private var secondTens: Int=0, private var secondUnits: Int=0) {
     
     private val maxVal: Int=9
     private val maxVal2: Int=5
     private val minVal: Int =0
+    private lateinit var counter: CountDownTimer
 
     fun modify(id: Int, add:Boolean): Int {
         when(id){
@@ -50,6 +53,24 @@ class Timer(private var minuteTens: Int=0, private var minuteUnits: Int=0,
             setSecondTens(5)
             setSecondUnits(maxVal)
         }
+    }
+
+    fun startTime(timeLeftInMillis: Long){
+        counter = object : CountDownTimer(timeLeftInMillis, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                countDown()
+                fragment.activity?.runOnUiThread {
+                        fragment.setFields()
+                    }
+            }
+
+            override fun onFinish() {}
+        }
+        counter.start()
+    }
+    fun endTime(){
+        counter.cancel()
     }
     
     fun zeroAll(){

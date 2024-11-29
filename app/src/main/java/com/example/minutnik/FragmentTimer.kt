@@ -24,8 +24,7 @@ class FragmentTimer : Fragment() {
     private var minutes: Int=0
     private var seconds: Int=0
 
-    lateinit var timer:Timer
-    private lateinit var countDown: CountDownTimer
+    private lateinit var timer:Timer
 
     lateinit var minuteTens: TextView
     lateinit var minuteUnits : TextView
@@ -33,31 +32,12 @@ class FragmentTimer : Fragment() {
     lateinit var secondUnits : TextView
     private var timeLeftInMillis: Long = 0
 
-    private fun setFields(){
+    fun setFields(){
         minuteTens.text=String.format("%s",timer.getMinuteTens())
         minuteUnits.text=String.format("%s",timer.getMinuteUnits())
         secondTens.text=String.format("%s",timer.getSecondTens())
         secondUnits.text=String.format("%s",timer.getSecondUnits())
     }
-
-    private fun startTime(){
-
-        if (::countDown.isInitialized) {
-            countDown.cancel()
-        }
-
-        countDown = object : CountDownTimer(timeLeftInMillis, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                timer.countDown()
-                setFields()
-            }
-
-            override fun onFinish() {}
-        }
-        countDown.start()
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,11 +45,6 @@ class FragmentTimer : Fragment() {
             minutes = it.getInt("mins")
             seconds = it.getInt("secs")
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        countDown.cancel()
     }
 
     override fun onCreateView(
@@ -83,11 +58,6 @@ class FragmentTimer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countDown = object : CountDownTimer(0, 0) {
-            override fun onTick(millisUntilFinished: Long) {}
-            override fun onFinish() {}
-        }
-
 
         val minTens = minutes/10
         val minUnits = minutes % 10
@@ -97,7 +67,7 @@ class FragmentTimer : Fragment() {
         if(secTens>5)
             secTens=0
 
-        timer = Timer(minTens,minUnits,secTens,secUnits)
+        timer = Timer(this,minTens,minUnits,secTens,secUnits)
 
         val buttonAdd1 = view.findViewById<Button>(R.id.add1)
         val buttonAdd2 = view.findViewById<Button>(R.id.add2)
@@ -162,13 +132,13 @@ class FragmentTimer : Fragment() {
                     +timer.getSecondTens()*10000
                     +timer.getSecondUnits()*1000).toLong()
             
-            startTime()
+            timer.startTime(timeLeftInMillis)
             buttonStop.isEnabled=true
             buttonPause.isEnabled=true
         }
 
         buttonStop.setOnClickListener{
-            countDown.cancel()
+            timer.endTime()
             timer.zeroAll()
             setFields()
             timeLeftInMillis=0
@@ -177,7 +147,7 @@ class FragmentTimer : Fragment() {
         }
 
         buttonPause.setOnClickListener{
-            countDown.cancel()
+           timer.endTime()
         }
     }
 
@@ -199,5 +169,6 @@ class FragmentTimer : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
     }
 }

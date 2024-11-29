@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentTimer.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentTimer : Fragment() {
+class FragmentTimer : Fragment(), TimerCallback {
     // TODO: Rename and change types of parameters
     private var minutes: Int=0
     private var seconds: Int=0
@@ -32,7 +32,17 @@ class FragmentTimer : Fragment() {
     lateinit var secondUnits : TextView
     private var timeLeftInMillis: Long = 0
 
-    fun setFields(){
+    override fun onTimerCountdown() {
+        activity?.runOnUiThread{
+            setFields()
+        }
+    }
+
+    override fun onTimerFinish() {
+        Toast.makeText(this.requireContext(), "Timer finished!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setFields(){
         minuteTens.text=String.format("%s",timer.getMinuteTens())
         minuteUnits.text=String.format("%s",timer.getMinuteUnits())
         secondTens.text=String.format("%s",timer.getSecondTens())

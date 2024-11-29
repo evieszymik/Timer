@@ -1,9 +1,13 @@
 package com.example.minutnik
 
 import android.os.CountDownTimer
-import android.widget.Toast
 
-class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, private var minuteUnits: Int=0,
+interface TimerCallback{
+    fun onTimerCountdown()
+    fun onTimerFinish()
+}
+
+class Timer(private val callback: TimerCallback,private var minuteTens: Int=0, private var minuteUnits: Int=0,
             private var secondTens: Int=0, private var secondUnits: Int=0) {
     
     private val maxVal: Int=9
@@ -45,20 +49,20 @@ class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, p
 
     fun countDown(){
         if(secondUnits>minVal)
-            setSecondUnits(secondUnits-1)
+            decreaseSecondUnits()
         else if(secondTens>minVal){
-            setSecondTens(secondTens-1)
+            decreaseSecondTens()
             setSecondUnits(maxVal)
         }
         else if(minuteUnits>minVal){
-            setMinuteUnits(minuteUnits-1)
-            setSecondTens(5)
+            decreaseMinuteUnits()
+            setSecondTens(maxVal2)
             setSecondUnits(maxVal)
         }
         else{
-            setMinuteTens(minuteTens-1)
+           decreaseMinuteTens()
             setMinuteUnits(maxVal)
-            setSecondTens(5)
+            setSecondTens(maxVal2)
             setSecondUnits(maxVal)
         }
     }
@@ -68,15 +72,11 @@ class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, p
 
             override fun onTick(millisUntilFinished: Long) {
                 countDown()
-                fragment.activity?.runOnUiThread {
-                        fragment.setFields()
-                    }
+                callback.onTimerCountdown()
             }
 
             override fun onFinish() {
-                fragment.activity?.runOnUiThread {
-                    Toast.makeText(fragment.requireContext(), "Timer finished!", Toast.LENGTH_SHORT).show()
-                }
+                callback.onTimerFinish()
             }
         }
         counter.start()

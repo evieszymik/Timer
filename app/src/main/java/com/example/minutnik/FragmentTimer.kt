@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,7 +65,11 @@ class FragmentTimer : Fragment() {
         val secUnits = seconds%10
 
         if(secTens>5)
+        {
             secTens=0
+            Toast.makeText(requireContext(), "Incorrect second tens value", Toast.LENGTH_SHORT).show()
+        }
+
 
         timer = Timer(this,minTens,minUnits,secTens,secUnits)
 

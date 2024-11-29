@@ -1,6 +1,7 @@
 package com.example.minutnik
 
 import android.os.CountDownTimer
+import android.widget.Toast
 
 class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, private var minuteUnits: Int=0,
             private var secondTens: Int=0, private var secondUnits: Int=0) {
@@ -65,7 +66,11 @@ class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, p
                     }
             }
 
-            override fun onFinish() {}
+            override fun onFinish() {
+                fragment.activity?.runOnUiThread {
+                    Toast.makeText(fragment.requireContext(), "Timer finished!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         counter.start()
     }

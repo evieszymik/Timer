@@ -99,35 +99,43 @@ class FragmentTimer : Fragment() {
 
 
         buttonAdd1.setOnClickListener {
-            minuteTens.text = String.format("%s",timer.modify(1,true))
+            timer.increaseMinuteTens()
+            minuteTens.text = String.format("%s",timer.getMinuteTens())
         }
 
         buttonAdd2.setOnClickListener {
-            minuteUnits.text = String.format("%s",timer.modify(2,true))
+            timer.increaseMinuteUnits()
+            minuteUnits.text = String.format("%s",timer.getMinuteUnits())
             }
 
         buttonAdd3.setOnClickListener {
-            secondTens.text = String.format("%s",timer.modify(3,true))
+            timer.increaseSecondTens()
+            secondTens.text = String.format("%s",timer.getSecondTens())
              }
 
         buttonAdd4.setOnClickListener {
-            secondUnits.text = String.format("%s",timer.modify(4,true))
+            timer.increaseSecondUnits()
+            secondUnits.text = String.format("%s",timer.getSecondUnits())
              }
 
         buttonSub1.setOnClickListener {
-            minuteTens.text = String.format("%s",timer.modify(1,false))
+            timer.decreaseMinuteTens()
+            minuteTens.text = String.format("%s",timer.getMinuteTens())
              }
 
         buttonSub2.setOnClickListener {
-            minuteUnits.text = String.format("%s",timer.modify(2,false))
+            timer.decreaseMinuteUnits()
+            minuteUnits.text = String.format("%s",timer.getMinuteUnits())
              }
 
         buttonSub3.setOnClickListener {
-            secondTens.text = String.format("%s",timer.modify(3,false))
+            timer.decreaseSecondTens()
+            secondTens.text = String.format("%s",timer.getSecondTens())
              }
 
         buttonSub4.setOnClickListener {
-            secondUnits.text = String.format("%s",timer.modify(4,false))
+            timer.decreaseSecondUnits()
+            secondUnits.text = String.format("%s",timer.getSecondUnits())
              }
 
         buttonStart.setOnClickListener{

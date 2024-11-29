@@ -11,31 +11,38 @@ class Timer(private val fragment: FragmentTimer,private var minuteTens: Int=0, p
     private val minVal: Int =0
     private lateinit var counter: CountDownTimer
 
-    fun modify(id: Int, add:Boolean): Int {
-        when(id){
-            1 -> { if((minuteTens==maxVal && add) || minuteTens==minVal && !add)
-                    return minuteTens
-                this.minuteTens = if(add) this.minuteTens+1 else this.minuteTens-1
-                return minuteTens}
-
-            2 -> { if((minuteUnits==maxVal && add) || minuteUnits==minVal && !add)
-                    return minuteUnits
-                this.minuteUnits = if(add) minuteUnits+1 else minuteUnits-1
-                    return minuteUnits}
-
-            3 -> { if((secondTens==maxVal2 && add) || secondTens==minVal && !add)
-                    return secondTens
-                this.secondTens = if(add) secondTens+1 else secondTens-1
-                    return secondTens}
-
-            4 -> {if((secondUnits==maxVal && add) || secondUnits==minVal && !add)
-                    return secondUnits
-                this.secondUnits = if(add) secondUnits+1 else secondUnits-1
-                    return secondUnits}
-        }
-        return minVal
+    fun increaseMinuteTens(){
+        setMinuteTens(this.minuteTens +1)
     }
-    
+
+    fun increaseMinuteUnits(){
+        setMinuteUnits(this.minuteUnits +1)
+    }
+
+    fun increaseSecondTens(){
+        setSecondTens(this.secondTens +1)
+    }
+
+    fun increaseSecondUnits(){
+        setSecondUnits(this.secondUnits +1)
+    }
+
+    fun decreaseMinuteTens(){
+        setMinuteTens(this.minuteTens -1)
+    }
+
+    fun decreaseMinuteUnits(){
+        setMinuteUnits(this.minuteUnits -1)
+    }
+
+    fun decreaseSecondTens(){
+        setSecondTens(this.secondTens -1)
+    }
+
+    fun decreaseSecondUnits(){
+        setSecondUnits(this.secondUnits -1)
+    }
+
     fun countDown(){
         if(secondUnits>minVal)
             setSecondUnits(secondUnits-1)
